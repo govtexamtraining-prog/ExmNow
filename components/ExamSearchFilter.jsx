@@ -207,9 +207,9 @@ export default function ExamSearchFilter({ examsData = [] }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-[10px] font-bold text-slate-500 hover:text-brand-600 dark:text-slate-400 dark:hover:text-brand-400 flex items-center gap-0.5 px-1.5 py-0.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                      title="Open Verified Official Commission Portal"
+                      title="Open Commission Portal"
                     >
-                      <span>Official Site</span>
+                      <span>Visit Site</span>
                       <ExternalLink className="w-2.5 h-2.5" />
                     </a>
                   )}
@@ -243,24 +243,54 @@ export default function ExamSearchFilter({ examsData = [] }) {
                   <span>Syllabus PDF</span>
                 </a>
               </div>
+
+              {/* Result or Notification Release Date & Time Badge */}
+              <div className={`flex items-center gap-2 p-2.5 rounded-xl border text-[11px] mb-3 ${
+                exam.status === 'RESULT'
+                  ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800/60'
+                  : 'bg-slate-50 dark:bg-slate-800/80 border-slate-200/80 dark:border-slate-700/80'
+              }`}>
+                <div className={`p-1.5 rounded-lg shrink-0 ${
+                  exam.status === 'RESULT'
+                    ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
+                    : 'bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300'
+                }`}>
+                  <Clock className="w-3.5 h-3.5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <span className="text-[10px] font-black uppercase text-slate-500 dark:text-slate-400 block tracking-wider">
+                    {exam.status === 'RESULT' ? 'Result Declared Date & Time' : 'Notification Release Date & Time'}:
+                  </span>
+                  <span className="font-extrabold text-slate-900 dark:text-white text-[11px] truncate block font-mono">
+                    {exam.important_dates?.result_datetime || (exam.status === 'RESULT' ? `${exam.important_dates?.result_date || 'Declared Today'} • 10:00 AM IST` : `${exam.important_dates?.apply_start || 'Announced'} • 09:30 AM IST`)}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            {/* Action Grid Buttons - Faithful to blueprint with extra polish */}
+            {/* Action Grid Buttons - Direct official website redirect for results */}
             <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-100 dark:border-slate-800/80">
               <Link
-                href={`/exams/${exam.exam_id}?action=apply`}
+                href={`/exams/${exam.exam_id}`}
                 className="text-center py-2 px-3 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-semibold transition-colors flex items-center justify-center gap-1.5"
               >
                 <span>Apply & Info</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-500" />
               </Link>
-              <Link
-                href={`/exams/${exam.exam_id}?action=result`}
-                className="text-center py-2 px-3 bg-brand-50 hover:bg-brand-100 dark:bg-brand-950/60 dark:hover:bg-brand-900/80 text-brand-700 dark:text-brand-300 rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 border border-brand-200 dark:border-brand-800/50"
+              <a
+                href={exam.results_url || exam.official_portal || `https://${exam.official_domain || 'gov.in'}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`text-center py-2 px-3 rounded-xl font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm group ${
+                  exam.status === 'RESULT'
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+                    : 'bg-brand-600 hover:bg-brand-700 text-white shadow-brand-600/20'
+                }`}
+                title={`Open Official Results Portal: ${exam.results_url || exam.official_portal}`}
               >
-                <span>Check Result</span>
-                <ArrowRight className="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" />
-              </Link>
+                <span>Check Results</span>
+                <ExternalLink className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
             </div>
           </div>
         ))}

@@ -84,11 +84,48 @@ body {
   animation: shimmer 2.5s infinite;
 }
 
-/* Hide scrollbar for category pills */
-.scrollbar-none::-webkit-scrollbar {
+/* Hide scrollbar for category pills and ticker */
+.scrollbar-none::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-.scrollbar-none {
+.scrollbar-none,
+.no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Horizontal Continuous Marquee Animation */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-scroll {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 850s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-scroll.paused,
+.animate-marquee-scroll:hover {
+  animation-play-state: paused;
+}
+
+.marquee-speed-crawl {
+  animation-duration: 1100s;
+}
+
+.marquee-speed-very-slow {
+  animation-duration: 850s;
+}
+
+.marquee-speed-slow {
+  animation-duration: 550s;
+}
+

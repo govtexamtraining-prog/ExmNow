@@ -8,6 +8,7 @@ import {
   FileText, Download, Search, Sparkles, Filter, 
   ExternalLink, CheckCircle2, Clock, AlertCircle, RefreshCw 
 } from 'lucide-react';
+import GoogleAdBanner from '../components/GoogleAdBanner';
 
 export default function PapersArchivePage({ initialPapers = [], exams = [] }) {
   const [papers, setPapers] = useState(initialPapers);
@@ -93,6 +94,9 @@ export default function PapersArchivePage({ initialPapers = [], exams = [] }) {
               Direct CDN links without sign-ups or ad paywalls.
             </p>
           </div>
+
+          {/* Google AdSense Leaderboard Placement */}
+          <GoogleAdBanner slot="horizontal" />
 
           {/* Filter Bar */}
           <div className="p-6 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
@@ -229,6 +233,9 @@ export default function PapersArchivePage({ initialPapers = [], exams = [] }) {
               </div>
             )}
           </div>
+
+          {/* Google AdSense In-Feed Responsive Native Unit */}
+          <GoogleAdBanner slot="infeed" className="my-6" />
         </main>
 
         <Footer />
